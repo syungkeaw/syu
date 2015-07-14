@@ -4,6 +4,7 @@
 /* @var $content string */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
@@ -36,6 +37,15 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
+            '<form class="navbar-form navbar-left" method="POST" action="'.Yii::$app->homeUrl.'/movie/search">
+                <div class="form-group">
+                    <input type="text" name="search_movie" class="form-control" placeholder="ค้นหาภาพยนต์...">
+                    <input type="hidden" name="_csrf" value="'.Yii::$app->request->getCsrfToken().'" />
+                </div>
+                <button type="submit" class="btn btn-default">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
+            </form>',
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
@@ -44,6 +54,7 @@ AppAsset::register($this);
                 ['label' => 'Sign out (' . Yii::$app->user->identity->username . ')',
                     'url' => ['/user/security/logout'],
                     'linkOptions' => ['data-method' => 'post']],
+            ['label' => 'Profile', 'url' => ['/user/settings/profile'], 'visible' => !Yii::$app->user->isGuest],
             ['label' => 'Register', 'url' => ['/user/registration/register'], 'visible' => Yii::$app->user->isGuest]
         ],
     ]);
