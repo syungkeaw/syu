@@ -28,7 +28,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'Moviesyum',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -39,7 +39,7 @@ AppAsset::register($this);
         'items' => [
             '<form class="navbar-form navbar-left" method="POST" action="'.Yii::$app->homeUrl.'/movie/search">
                 <div class="form-group">
-                    <input type="text" name="search_movie" class="form-control" placeholder="ค้นหาภาพยนต์...">
+                    <input type="text" name="search_movie" class="form-control" placeholder="ชื่อหนัง เช่น Avatar">
                     <input type="hidden" name="_csrf" value="'.Yii::$app->request->getCsrfToken().'" />
                 </div>
                 <button type="submit" class="btn btn-default">

@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Movie */
 
-$this->title = $model->Title;
-$this->params['breadcrumbs'][] = ['label' => 'Movies', 'url' => ['index']];
+$this->title = $model->title;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Movies'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="movie-view">
@@ -15,11 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->imdbID], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->imdbID], [
+        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->title_id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->title_id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
                 'method' => 'post',
             ],
         ]) ?>
@@ -28,39 +28,21 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'imdbID',
-            'Title',
-            'Year',
-            'Rated',
-            'Released',
-            'Runtime',
-            'Genre',
-            'Director',
-            'Writer',
-            'Actors',
-            'Plot:ntext',
-            'Language',
-            'Country',
-            'Awards',
-            'Poster',
-            'Metascore',
-            'imdbRating',
-            'imdbVotes',
-            'Type',
-            'tomatoMeter',
-            'tomatoImage',
-            'tomatoRating',
-            'tomatoReviews',
-            'tomatoFresh',
-            'tomatoRotten',
-            'tomatoConsensus',
-            'tomatoUserMeter',
-            'tomatoUserRating',
-            'tomatoUserReviews',
-            'DVD',
-            'BoxOffice',
-            'Production',
-            'Website',
+            'title_id',
+            'title',
+            'original_title',
+            'year',
+            'rating',
+            'mpaa_rating',
+            'release_date',
+            'tagline',
+            'plot:ntext',
+            'poster',
+            'runtime',
+            'oscars',
+            'awards',
+            'nominations',
+            'votes',
         ],
     ]) ?>
 

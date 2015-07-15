@@ -4,7 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Movie;
-use app\models\MovieSearch;
+use app\Models\MovieSearch;
+use app\components\imdb;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -41,18 +42,6 @@ class MovieController extends Controller
         ]);
     }
 
-    public function actionSearch()
-    {
-        $searchModel = new MovieSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'x' => Yii::$app->request->post(),
-        ]);
-    }
-
     /**
      * Displays a single Movie model.
      * @param string $id
@@ -75,7 +64,7 @@ class MovieController extends Controller
         $model = new Movie();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->imdbID]);
+            return $this->redirect(['view', 'id' => $model->title_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -94,7 +83,7 @@ class MovieController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->imdbID]);
+            return $this->redirect(['view', 'id' => $model->title_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -113,6 +102,15 @@ class MovieController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionSearch()
+    {
+        //Yii::$app->request->post();
+        $imdb = new Imdb();
+        return $this->render('search', [
+                'data'=>$imdb->listIMDbIdFromSearch('avetar')
+            ]);
     }
 
     /**

@@ -5,10 +5,12 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Movie */
 
-$this->title = 'Update Movie: ' . ' ' . $model->Title;
-$this->params['breadcrumbs'][] = ['label' => 'Movies', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->Title, 'url' => ['view', 'id' => $model->imdbID]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = Yii::t('app', 'Update {modelClass}: ', [
+    'modelClass' => 'Movie',
+]) . ' ' . $model->title;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Movies'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->title_id]];
+$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="movie-update">
 

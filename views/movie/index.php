@@ -4,10 +4,10 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\MovieSearch */
+/* @var $searchModel app\Models\MovieSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Movies';
+$this->title = Yii::t('app', 'Movies');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="movie-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Movie', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Movie'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,39 +25,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'imdbID',
-            'Title',
-            'Year',
-            'Rated',
-            'Released',
-            // 'Runtime',
-            // 'Genre',
-            // 'Director',
-            // 'Writer',
-            // 'Actors',
-            // 'Plot:ntext',
-            // 'Language',
-            // 'Country',
-            // 'Awards',
-            // 'Poster',
-            // 'Metascore',
-            // 'imdbRating',
-            // 'imdbVotes',
-            // 'Type',
-            // 'tomatoMeter',
-            // 'tomatoImage',
-            // 'tomatoRating',
-            // 'tomatoReviews',
-            // 'tomatoFresh',
-            // 'tomatoRotten',
-            // 'tomatoConsensus',
-            // 'tomatoUserMeter',
-            // 'tomatoUserRating',
-            // 'tomatoUserReviews',
-            // 'DVD',
-            // 'BoxOffice',
-            // 'Production',
-            // 'Website',
+            'title_id',
+            'title',
+            'original_title',
+            'year',
+            'rating',
+            // 'mpaa_rating',
+            // 'release_date',
+            // 'tagline',
+            // 'plot:ntext',
+            // 'poster',
+            // 'runtime',
+            // 'oscars',
+            // 'awards',
+            // 'nominations',
+            // 'votes',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
