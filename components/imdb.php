@@ -211,22 +211,10 @@ class Imdb
 			return $ids[0]; //return first IMDb result
 	}
 
-	public function listIMDbIdFromSearch($title, $engine = "google"){
-		switch ($engine) {
-			case "google":  $nextEngine = "bing";  break;
-			case "bing":    $nextEngine = "ask";   break;
-			case "ask":     $nextEngine = FALSE;   break;
-			case FALSE:     return NULL;
-			default:        return NULL;
-		}
-		$url = "http://www.${engine}.com/search?q=imdb+title+" . rawurlencode($title);
-		$ids = $this->match_all_arr('/<a.*?href="http:\/\/www.imdb.com\/title\/(tt\d+).*?".*?>(.*?)<\/a>/ms', $this->geturl($url));
-		print_r($ids);
-		if (!isset($ids[0]) || empty($ids[0])) //if search failed
-			return $this->listIMDbIdFromSearch($title, $nextEngine); //move to next search engine
-		else
-			return $ids[0]; //return first IMDb result
-	}
+	public function listIMDbIdFromSearch($title){
+		$data = $this->geturl('http://www.imdb.com/xml/find?json=1&nr=1&tt=on&q='.$title);
+		return json_decode($data);
+	}	
 
 	private function geturl($url){
 		$ch = curl_init();
@@ -270,6 +258,7 @@ class Imdb
 			return $match[$i];
 		else
 			return false;
-	}
+	}/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
 ?>

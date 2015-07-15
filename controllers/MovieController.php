@@ -109,7 +109,7 @@ class MovieController extends Controller
         //Yii::$app->request->post();
         $imdb = new Imdb();
         return $this->render('search', [
-                'data'=>$imdb->listIMDbIdFromSearch('avetar')
+                'data'=>$imdb->listIMDbIdFromSearch('thor+2')
             ]);
     }
 
