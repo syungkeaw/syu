@@ -37,10 +37,9 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            '<form class="navbar-form navbar-left" method="POST" action="'.Yii::$app->homeUrl.'/movie/search">
+            '<form class="navbar-form navbar-left" method="GET" action="'.Yii::$app->homeUrl.'/movie/search">
                 <div class="form-group">
                     <input type="text" name="search_movie" class="form-control" placeholder="ชื่อหนัง เช่น Avatar">
-                    <input type="hidden" name="_csrf" value="'.Yii::$app->request->getCsrfToken().'" />
                 </div>
                 <button type="submit" class="btn btn-default">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>

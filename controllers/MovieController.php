@@ -109,10 +109,10 @@ class MovieController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function actionSearch()
+    public function actionSearch($search_movie)
     {
         $imdb = new Imdb();
-        $title = str_replace(' ','+',trim(Yii::$app->request->post('search_movie')));
+        echo $title = str_replace(' ','+',trim($search_movie));
         return $this->render('search', [
                 'model'=>empty($title)? 'empty' : $imdb->listIMDbIdFromSearch($title)
             ]);
