@@ -36,6 +36,8 @@ class MovieController extends Controller
         $model = Movie::findOne($id); 
         $movie = 'old movie';
         if(Movie::findOne($id) === null){
+            return $this->render('generating');           
+
             $movie = $this->generateMovieFromIMDB($id);       
         }
 
@@ -149,6 +151,8 @@ class MovieController extends Controller
         $model->setAttributes($movie_new, false);
         $model->created_at = $model->updated_at = time();
         $model->save();
+        // print_r($movie_new);
+        // print_r($model);
     }
 
 }

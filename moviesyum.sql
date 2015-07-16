@@ -10,38 +10,16 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2015-07-14 17:29:04
+Date: 2015-07-16 15:28:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for migration
+-- Table structure for ####movie_omdb
 -- ----------------------------
-DROP TABLE IF EXISTS `migration`;
-CREATE TABLE `migration` (
-  `version` varchar(180) NOT NULL,
-  `apply_time` int(11) DEFAULT NULL,
-  PRIMARY KEY (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of migration
--- ----------------------------
-INSERT INTO `migration` VALUES ('m000000_000000_base', '1436539696');
-INSERT INTO `migration` VALUES ('m140209_132017_init', '1436539784');
-INSERT INTO `migration` VALUES ('m140403_174025_create_account_table', '1436539814');
-INSERT INTO `migration` VALUES ('m140504_113157_update_tables', '1436539826');
-INSERT INTO `migration` VALUES ('m140504_130429_create_token_table', '1436539832');
-INSERT INTO `migration` VALUES ('m140830_171933_fix_ip_field', '1436539835');
-INSERT INTO `migration` VALUES ('m140830_172703_change_account_table_name', '1436539835');
-INSERT INTO `migration` VALUES ('m141222_110026_update_ip_field', '1436539838');
-
--- ----------------------------
--- Table structure for movie
--- ----------------------------
-DROP TABLE IF EXISTS `movie`;
-CREATE TABLE `movie` (
+DROP TABLE IF EXISTS `####movie_omdb`;
+CREATE TABLE `####movie_omdb` (
   `imdbID` varchar(9) NOT NULL,
   `Title` varchar(255) NOT NULL,
   `Year` varchar(4) DEFAULT NULL,
@@ -79,9 +57,233 @@ CREATE TABLE `movie` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Records of ####movie_omdb
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for cast
+-- ----------------------------
+DROP TABLE IF EXISTS `cast`;
+CREATE TABLE `cast` (
+  `cast_id` varchar(10) NOT NULL,
+  `cast_name` varchar(255) NOT NULL,
+  PRIMARY KEY (`cast_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of cast
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for cast_star
+-- ----------------------------
+DROP TABLE IF EXISTS `cast_star`;
+CREATE TABLE `cast_star` (
+  `title_id` varchar(10) NOT NULL,
+  `cast_id` varchar(10) NOT NULL,
+  PRIMARY KEY (`title_id`,`cast_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of cast_star
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for genre
+-- ----------------------------
+DROP TABLE IF EXISTS `genre`;
+CREATE TABLE `genre` (
+  `genre_id` int(3) NOT NULL AUTO_INCREMENT,
+  `genre_label` varchar(100) NOT NULL,
+  PRIMARY KEY (`genre_id`,`genre_label`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of genre
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for migration
+-- ----------------------------
+DROP TABLE IF EXISTS `migration`;
+CREATE TABLE `migration` (
+  `version` varchar(180) NOT NULL,
+  `apply_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`version`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of migration
+-- ----------------------------
+INSERT INTO `migration` VALUES ('m000000_000000_base', '1436539696');
+INSERT INTO `migration` VALUES ('m140209_132017_init', '1436539784');
+INSERT INTO `migration` VALUES ('m140403_174025_create_account_table', '1436539814');
+INSERT INTO `migration` VALUES ('m140504_113157_update_tables', '1436539826');
+INSERT INTO `migration` VALUES ('m140504_130429_create_token_table', '1436539832');
+INSERT INTO `migration` VALUES ('m140830_171933_fix_ip_field', '1436539835');
+INSERT INTO `migration` VALUES ('m140830_172703_change_account_table_name', '1436539835');
+INSERT INTO `migration` VALUES ('m141222_110026_update_ip_field', '1436539838');
+
+-- ----------------------------
+-- Table structure for movie
+-- ----------------------------
+DROP TABLE IF EXISTS `movie`;
+CREATE TABLE `movie` (
+  `title_id` varchar(10) NOT NULL,
+  `title` varchar(150) NOT NULL,
+  `original_title` varchar(100) DEFAULT NULL,
+  `year` int(4) DEFAULT NULL,
+  `rating` float DEFAULT NULL,
+  `mpaa_rating` varchar(50) DEFAULT NULL,
+  `release_date` date DEFAULT NULL,
+  `tagline` varchar(255) DEFAULT NULL,
+  `plot` text,
+  `poster` varchar(255) DEFAULT NULL,
+  `runtime` varchar(255) DEFAULT NULL,
+  `oscars` varchar(255) DEFAULT NULL,
+  `awards` varchar(255) DEFAULT NULL,
+  `nominations` varchar(255) DEFAULT NULL,
+  `votes` int(10) DEFAULT NULL,
+  `updated_at` int(11) NOT NULL,
+  `created_at` int(11) NOT NULL,
+  PRIMARY KEY (`title_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 -- Records of movie
 -- ----------------------------
-INSERT INTO `movie` VALUES ('tt000000', 'xxx', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `movie` VALUES ('tt0499549', 'Avatar', '', '2009', '7.9', 'PG-13', '2009-12-17', 'Enter the World', 'A Paraplegic Marine dispatched to the moon Pandora on a unique mission becomes torn between following his orders and protecting the world he feels is his home..', 'http://ia.media-imdb.com/images/M/MV5BMTYwOTEwNjAzMl5BMl5BanBnXkFtZTcwODc5MTUwMw@@._V1._SY200.jpg', '162', '3', '83', '106', '797652', '1437034638', '1437034638');
+INSERT INTO `movie` VALUES ('tt0800369', 'Thor', '', '2011', '7', 'PG-13', '2011-04-28', 'Two worlds. One hero.', 'The powerful but arrogant god Thor is cast out of Asgard to live amongst humans in Midgard (Earth), where he soon becomes one of their finest defenders.', 'http://ia.media-imdb.com/images/M/MV5BMTYxMjA5NDMzNV5BMl5BanBnXkFtZTcwOTk2Mjk3NA@@._V1._SY200.jpg', '115', '', '5', '29', '460039', '1437034774', '1437034774');
+INSERT INTO `movie` VALUES ('tt0478970', 'Ant-Man', '', '2015', '8', 'PG-13', '2015-07-30', 'This July, heroes don&#x27;t come any bigger.', 'Armed with a super-suit with the astonishing ability to shrink in scale but increase in strength, con-man Scott Lang must embrace his inner hero and help his mentor, Dr. Hank Pym, plan and pull off a heist that will save the world.', 'http://ia.media-imdb.com/images/M/MV5BMjM2NTQ5Mzc2M15BMl5BanBnXkFtZTgwNTcxMDI2NTE@._V1._SY200.jpg', '117', '', '', '', '3033', '1437035076', '1437035076');
+
+-- ----------------------------
+-- Table structure for movie_cast
+-- ----------------------------
+DROP TABLE IF EXISTS `movie_cast`;
+CREATE TABLE `movie_cast` (
+  `title_id` varchar(10) NOT NULL,
+  `cast_id` varchar(10) NOT NULL,
+  PRIMARY KEY (`title_id`,`cast_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of movie_cast
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for movie_clip
+-- ----------------------------
+DROP TABLE IF EXISTS `movie_clip`;
+CREATE TABLE `movie_clip` (
+  `clip_id` int(11) NOT NULL AUTO_INCREMENT,
+  `title_id` int(11) NOT NULL,
+  `clip_url` varchar(255) NOT NULL,
+  PRIMARY KEY (`clip_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of movie_clip
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for movie_director
+-- ----------------------------
+DROP TABLE IF EXISTS `movie_director`;
+CREATE TABLE `movie_director` (
+  `title_id` varchar(10) NOT NULL,
+  `crew_id` varchar(10) NOT NULL,
+  PRIMARY KEY (`title_id`,`crew_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of movie_director
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for movie_editor
+-- ----------------------------
+DROP TABLE IF EXISTS `movie_editor`;
+CREATE TABLE `movie_editor` (
+  `title_id` varchar(10) NOT NULL,
+  `crew_id` varchar(10) NOT NULL,
+  PRIMARY KEY (`title_id`,`crew_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of movie_editor
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for movie_genre
+-- ----------------------------
+DROP TABLE IF EXISTS `movie_genre`;
+CREATE TABLE `movie_genre` (
+  `title_id` varchar(10) NOT NULL,
+  `genre_id` int(5) NOT NULL,
+  PRIMARY KEY (`title_id`,`genre_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of movie_genre
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for movie_image
+-- ----------------------------
+DROP TABLE IF EXISTS `movie_image`;
+CREATE TABLE `movie_image` (
+  `img_id` int(11) NOT NULL AUTO_INCREMENT,
+  `title_id` varchar(255) NOT NULL,
+  `img_url` varchar(255) NOT NULL,
+  PRIMARY KEY (`img_id`),
+  KEY `xxx` (`title_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of movie_image
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for movie_musician
+-- ----------------------------
+DROP TABLE IF EXISTS `movie_musician`;
+CREATE TABLE `movie_musician` (
+  `title_id` varchar(10) NOT NULL,
+  `crew_id` varchar(10) NOT NULL,
+  PRIMARY KEY (`title_id`,`crew_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of movie_musician
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for movie_writer
+-- ----------------------------
+DROP TABLE IF EXISTS `movie_writer`;
+CREATE TABLE `movie_writer` (
+  `title_id` varchar(10) NOT NULL,
+  `crew_id` varchar(10) NOT NULL,
+  PRIMARY KEY (`title_id`,`crew_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of movie_writer
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for production_crew
+-- ----------------------------
+DROP TABLE IF EXISTS `production_crew`;
+CREATE TABLE `production_crew` (
+  `crew_id` varchar(10) NOT NULL,
+  `crew_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`crew_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of production_crew
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for profile
@@ -106,6 +308,20 @@ CREATE TABLE `profile` (
 INSERT INTO `profile` VALUES ('1', 'Supachai', '', 'syungkeaw@gmail.com', '75fba3a6ba00e3ea0c721bd2cb3b586a', 'xx', 'http://www.moviesyum.com', '');
 INSERT INTO `profile` VALUES ('2', null, null, 'eggmenth@gmail.com', '43f86d6e9a2e4ee933372a3c9d1ac91f', null, null, null);
 INSERT INTO `profile` VALUES ('3', null, null, 'test@mail.com', '97dfebf4098c0f5c16bca61e2b76c373', null, null, null);
+
+-- ----------------------------
+-- Table structure for recommended_title
+-- ----------------------------
+DROP TABLE IF EXISTS `recommended_title`;
+CREATE TABLE `recommended_title` (
+  `title_id` varchar(10) NOT NULL,
+  `req_title_id` varchar(10) NOT NULL,
+  PRIMARY KEY (`title_id`,`req_title_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of recommended_title
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for social_account

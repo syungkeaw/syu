@@ -65,7 +65,7 @@ class Movie extends ActiveRecord
             [['title_id'], 'string', 'max' => 10],
             [['title'], 'string', 'max' => 150],
             [['original_title'], 'string', 'max' => 100],
-            [['mpaa_rating'], 'string', 'max' => 50],
+            // [['mpaa_rating'], 'string', 'max' => 50],
             [['tagline', 'poster', 'runtime', 'oscars', 'awards', 'nominations'], 'string', 'max' => 255],
         ];
     }
