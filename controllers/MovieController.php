@@ -31,14 +31,17 @@ class MovieController extends Controller
      * Lists all Movie models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id)
     {
-        $searchModel = new MovieSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = Movie::findOne($id); 
+        $movie = 'old movie';
+        if(Movie::findOne($id) === null){
+            $movie = $this->generateMovieFromIMDB($id);       
+        }
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'model' => $model,
+            'movie' => $movie,
         ]);
     }
 
@@ -106,10 +109,10 @@ class MovieController extends Controller
 
     public function actionSearch()
     {
-        //Yii::$app->request->post();
         $imdb = new Imdb();
+        $title = str_replace(' ','+',trim(Yii::$app->request->post('search_movie')));
         return $this->render('search', [
-                'data'=>$imdb->listIMDbIdFromSearch('thor+2')
+                'model'=>empty($title)? 'empty' : $imdb->listIMDbIdFromSearch($title)
             ]);
     }
 
@@ -128,4 +131,24 @@ class MovieController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    protected function generateMovieFromIMDB($id){
+        $imdb = new Imdb();
+        $movie_new = $imdb->getMovieInfo($id);
+        if($movie_new['response']!='ok'){
+            return $movie_new['response'];
+        }else{
+            $this->saveMovie($movie_new);
+        }
+    }
+
+    protected function saveMovie($movie_new){
+        $model = new Movie();
+        $movie_new['votes'] = intval(str_replace(',','',$movie_new['votes']));
+        $movie_new['release_date'] = date('Y-m-d', strtotime($movie_new['release_date']));
+        $model->setAttributes($movie_new, false);
+        $model->created_at = $model->updated_at = time();
+        $model->save();
+    }
+
 }

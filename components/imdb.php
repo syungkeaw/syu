@@ -21,7 +21,7 @@ class Imdb
 		$imdbId = $this->getIMDbIdFromSearch(trim($title));
 		if($imdbId === NULL){
 			$arr = array();
-			$arr['error'] = "No Title found in Search Results!";
+			$arr['response'] = "No Title found in Search Results!";
 			return $arr;
 		}
 		return $this->getMovieInfoById($imdbId, $getExtraInfo);
@@ -42,7 +42,7 @@ class Imdb
 		$html = $this->geturl("${imdbUrl}combined");
 		$title_id = $this->match('/<link rel="canonical" href="http:\/\/www.imdb.com\/title\/(tt\d+)\/combined" \/>/ms', $html, 1);
 		if(empty($title_id) || !preg_match("/tt\d+/i", $title_id)) {
-			$arr['error'] = "No Title found on IMDb!";
+			$arr['response'] = "No Title found on IMDb!";
 			return $arr;
 		}
 		$arr['title_id'] = $title_id;
@@ -96,6 +96,7 @@ class Imdb
 			$arr['media_images'] = $this->getMediaImages($arr['title_id']);
 			$arr['videos'] = $this->getVideos($arr['title_id']);
 		}
+		$arr['response'] = 'ok';
 		
 		return $arr;
 	}

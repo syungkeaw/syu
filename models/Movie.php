@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use Yii\db\ActiveRecord;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "movie".
@@ -22,9 +25,24 @@ use Yii;
  * @property string $awards
  * @property string $nominations
  * @property integer $votes
+ * @property integer $updated_at
+ * @property integer $created_at
  */
-class Movie extends \yii\db\ActiveRecord
+class Movie extends ActiveRecord
 {
+
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                   ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                   ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ]
+        ];
+    }
     /**
      * @inheritdoc
      */
@@ -39,8 +57,8 @@ class Movie extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title_id', 'title'], 'required'],
-            [['year', 'votes'], 'integer'],
+            [['title_id', 'title', 'updated_at', 'created_at'], 'required'],
+            [['year', 'votes', 'updated_at', 'created_at'], 'integer'],
             [['rating'], 'number'],
             [['release_date'], 'safe'],
             [['plot'], 'string'],
@@ -73,6 +91,8 @@ class Movie extends \yii\db\ActiveRecord
             'awards' => Yii::t('app', 'Awards'),
             'nominations' => Yii::t('app', 'Nominations'),
             'votes' => Yii::t('app', 'Votes'),
+            'updated_at' => Yii::t('app', 'Updated At'),
+            'created_at' => Yii::t('app', 'Created At'),
         ];
     }
 }
