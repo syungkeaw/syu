@@ -1,4 +1,7 @@
-generating....
+<header>
+	<h2>generating....</h2>
+</header>
+
 
 <?php
 $this->registerJsFile(

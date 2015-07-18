@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Movie;
+use app\models\MovieGenerateQuere;
 use app\Models\MovieSearch;
 use app\components\imdb;
 use yii\web\Controller;
@@ -36,9 +37,7 @@ class MovieController extends Controller
         $model = Movie::findOne($id); 
         $movie = 'old movie';
         if(Movie::findOne($id) === null){
-            return $this->render('generating');           
-
-            $movie = $this->generateMovieFromIMDB($id);       
+            return $this->render('generating');                
         }
 
         return $this->render('index', [
@@ -116,6 +115,25 @@ class MovieController extends Controller
         return $this->render('search', [
                 'model'=>empty($title)? 'empty' : $imdb->listIMDbIdFromSearch($title)
             ]);
+    }
+
+    public function actionGenerate($id)
+    {
+        $gen = MovieGenerateQuere::findOne($id);
+        if($gen === NULL){
+            $gen = new MovieGenerateQuere();
+            $gen->title_id = $id;
+            $gen->save();
+            $movie = $this->generateMovieFromIMDB($id); 
+            $res['status'] = 1;
+            $gen->delete();
+            echo json_encode($res); 
+        }else{
+            $res['status'] = 0;
+            $res['message'] = 'This movie is still creating, Pleace wait a minute.';
+            echo json_encode($res); 
+        }
+        die;
     }
 
     /**
