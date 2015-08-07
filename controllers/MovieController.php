@@ -4,7 +4,6 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Movie;
-use app\models\MovieGenerateQuere;
 use app\Models\MovieSearch;
 use app\components\imdb;
 use yii\web\Controller;
@@ -35,14 +34,12 @@ class MovieController extends Controller
     public function actionIndex($id)
     {
         $model = Movie::findOne($id); 
-        $movie = 'old movie';
-        if(Movie::findOne($id) === null){
-            return $this->render('generating');                
+        if($model === null){
+            $this->saveNewMovie($id);   
+            $model = Movie::findOne($id);             
         }
-
         return $this->render('index', [
             'model' => $model,
-            'movie' => $movie,
         ]);
     }
 
@@ -117,25 +114,6 @@ class MovieController extends Controller
             ]);
     }
 
-    public function actionGenerate($id)
-    {
-        $gen = MovieGenerateQuere::findOne($id);
-        if($gen === NULL){
-            $gen = new MovieGenerateQuere();
-            $gen->title_id = $id;
-            $gen->save();
-            $movie = $this->generateMovieFromIMDB($id); 
-            $res['status'] = 1;
-            $gen->delete();
-            echo json_encode($res); 
-        }else{
-            $res['status'] = 0;
-            $res['message'] = 'This movie is still creating, Pleace wait a minute.';
-            echo json_encode($res); 
-        }
-        die;
-    }
-
     /**
      * Finds the Movie model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -152,25 +130,19 @@ class MovieController extends Controller
         }
     }
 
-    protected function generateMovieFromIMDB($id){
+    protected function saveNewMovie($id){
         $imdb = new Imdb();
         $movie_new = $imdb->getMovieInfo($id);
         if($movie_new['response']!='ok'){
             return $movie_new['response'];
         }else{
-            $this->saveMovie($movie_new);
+            $model = new Movie();
+            $movie_new['votes'] = intval(str_replace(',','',$movie_new['votes']));
+            $movie_new['release_date'] = date('Y-m-d', strtotime($movie_new['release_date']));
+            $model->setAttributes($movie_new, false);
+            $model->created_at = $model->updated_at = time();
+            $model->save();
         }
-    }
-
-    protected function saveMovie($movie_new){
-        $model = new Movie();
-        $movie_new['votes'] = intval(str_replace(',','',$movie_new['votes']));
-        $movie_new['release_date'] = date('Y-m-d', strtotime($movie_new['release_date']));
-        $model->setAttributes($movie_new, false);
-        $model->created_at = $model->updated_at = time();
-        $model->save();
-        // print_r($movie_new);
-        // print_r($model);
     }
 
 }

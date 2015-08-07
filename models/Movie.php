@@ -61,12 +61,11 @@ class Movie extends ActiveRecord
             [['year', 'votes', 'updated_at', 'created_at'], 'integer'],
             [['rating'], 'number'],
             [['release_date'], 'safe'],
-            [['plot'], 'string'],
             [['title_id'], 'string', 'max' => 10],
             [['title'], 'string', 'max' => 150],
             [['original_title'], 'string', 'max' => 100],
             // [['mpaa_rating'], 'string', 'max' => 50],
-            [['tagline', 'poster', 'runtime', 'oscars', 'awards', 'nominations'], 'string', 'max' => 255],
+            [['poster', 'runtime', 'oscars', 'awards', 'nominations'], 'string', 'max' => 255],
         ];
     }
 
@@ -83,8 +82,6 @@ class Movie extends ActiveRecord
             'rating' => Yii::t('app', 'Rating'),
             'mpaa_rating' => Yii::t('app', 'Mpaa Rating'),
             'release_date' => Yii::t('app', 'Release Date'),
-            'tagline' => Yii::t('app', 'Tagline'),
-            'plot' => Yii::t('app', 'Plot'),
             'poster' => Yii::t('app', 'Poster'),
             'runtime' => Yii::t('app', 'Runtime'),
             'oscars' => Yii::t('app', 'Oscars'),
